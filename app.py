@@ -10,7 +10,7 @@ st.set_page_config(page_title="Credit Card Clustering", layout="wide")
 # ---------------------------- PREPROCESSING FUNCTIONS ----------------------------
 def load_data():
     # Load dataset from CSV file
-    df = pd.read_csv(r'D:\AI WORKSHOP\TASK\MLOPS\CC GENERAL.csv')
+    df = pd.read_csv("CC_GENERAL.csv")
     return df
 
 def clean_data(df):
