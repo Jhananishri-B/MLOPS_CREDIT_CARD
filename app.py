@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import os
 from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import KMeans, AgglomerativeClustering, DBSCAN
 from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_harabasz_score
@@ -8,9 +9,25 @@ from sklearn.metrics import silhouette_score, davies_bouldin_score, calinski_har
 st.set_page_config(page_title="Credit Card Clustering", layout="wide")
 
 # ---------------------------- PREPROCESSING FUNCTIONS ----------------------------
+
 def load_data():
-    # Load dataset from CSV file
-    df = pd.read_csv("data/CC_GENERAL.csv")
+    base_dir = r"D:/AI WORKSHOP/TASK/MLOPS"
+
+    # Possible file names
+    possible_files = ["CC_GENERAL_preprocessed.csv", "CC GENERAL_preprocessed.csv"]
+
+    file_path = None
+    for fname in possible_files:
+        candidate = os.path.join(base_dir, fname)
+        if os.path.exists(candidate):
+            file_path = candidate
+            break
+
+    if file_path is None:
+        raise FileNotFoundError("Dataset file not found. Expected one of: CC_GENERAL.csv or CC GENERAL.csv")
+
+    print(f"Loading dataset from: {file_path}")
+    df = pd.read_csv(file_path)
     return df
 
 def clean_data(df):
