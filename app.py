@@ -11,25 +11,20 @@ st.set_page_config(page_title="Credit Card Clustering", layout="wide")
 # ---------------------------- PREPROCESSING FUNCTIONS ----------------------------
 
 def load_data():
-    base_dir = r"D:/AI WORKSHOP/TASK/MLOPS"
-
-    # Possible file names
-    possible_files = ["CC_GENERAL_preprocessed.csv", "CC GENERAL_preprocessed.csv"]
+    possible_files = ["data/CC_GENERAL.csv", "data/CC GENERAL.csv",
+                      "data/CC_GENERAL_preprocessed.csv", "data/CC GENERAL_preprocessed.csv"]
 
     file_path = None
     for fname in possible_files:
-        candidate = os.path.join(base_dir, fname)
-        if os.path.exists(candidate):
-            file_path = candidate
+        if os.path.exists(fname):
+            file_path = fname
             break
 
     if file_path is None:
-        raise FileNotFoundError("Dataset file not found. Expected one of: CC_GENERAL.csv or CC GENERAL.csv")
+        raise FileNotFoundError("Dataset not found. Place it in a 'data/' folder in your repo.")
 
-    print(f"Loading dataset from: {file_path}")
     df = pd.read_csv(file_path)
     return df
-
 def clean_data(df):
     # Placeholder for cleaning data if needed
     # You can add more cleaning steps if required
