@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/559187890495555514/7ed956faf757446bb7397f2564e5c492/artifacts
+deleted_time: 1758004583065
+end_time: 1758001939653
+entry_point_name: ''
+experiment_id: '559187890495555514'
+lifecycle_stage: deleted
+run_id: 7ed956faf757446bb7397f2564e5c492
+run_name: Clustering_Comparison
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758001907411
+status: 3
+tags: []
+user_id: JHANANISHRI

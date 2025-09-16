@@ -1,0 +1,15 @@
+artifact_uri: mlflow-artifacts:/0/0b0ee2850bf74b64b9b0fcd9ca59bc9f/artifacts
+deleted_time: 1757997628103
+end_time: 1757995136199
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: deleted
+run_id: 0b0ee2850bf74b64b9b0fcd9ca59bc9f
+run_name: Clustering Evaluation
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1757995123081
+status: 4
+tags: []
+user_id: JHANANISHRI

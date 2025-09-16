@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/559187890495555514/bbeae35d58624d049cdfdad5d008cf82/artifacts
+end_time: 1758004448296
+entry_point_name: ''
+experiment_id: '559187890495555514'
+lifecycle_stage: active
+run_id: bbeae35d58624d049cdfdad5d008cf82
+run_name: Hierarchical
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758004432451
+status: 3
+tags: []
+user_id: JHANANISHRI

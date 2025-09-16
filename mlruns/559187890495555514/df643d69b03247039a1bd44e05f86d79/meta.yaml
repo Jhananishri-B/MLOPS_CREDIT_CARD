@@ -1,0 +1,14 @@
+artifact_uri: mlflow-artifacts:/559187890495555514/df643d69b03247039a1bd44e05f86d79/artifacts
+end_time: 1758004448670
+entry_point_name: ''
+experiment_id: '559187890495555514'
+lifecycle_stage: active
+run_id: df643d69b03247039a1bd44e05f86d79
+run_name: DBSCAN
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1758004448320
+status: 3
+tags: []
+user_id: JHANANISHRI
