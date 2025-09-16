@@ -9,13 +9,9 @@ st.set_page_config(page_title="Credit Card Clustering", layout="wide")
 
 # ---------------------------- PREPROCESSING FUNCTIONS ----------------------------
 def load_data():
-    uploaded_file = st.file_uploader("Upload Credit Card Dataset (CSV)", type="csv")
-    if uploaded_file is not None:
-        df = pd.read_csv(uploaded_file)
-        return df
-    else:
-        st.warning("Please upload a dataset to proceed.")
-        st.stop()
+    # Load dataset from CSV file
+    df = pd.read_csv("data/CC_GENERAL.csv")
+    return df
 
 def clean_data(df):
     # Placeholder for cleaning data if needed
