@@ -1,104 +1,147 @@
 # Streamlit UI
 (https://mlopscreditcard-drt2nqzgcls3s6dkc9c5p8.streamlit.app/)
-# Credit Card Customer Clustering
+ # Credit Card Customer Segmentation (MLOps project)
 
-This project applies clustering algorithms (KMeans, Hierarchical, and DBSCAN) to credit card customer data to segment customers based on their spending and payment behaviors. The analysis includes data preprocessing, dimensionality reduction, clustering, and evaluation of clustering performance.
+This repository contains an end-to-end credit card customer segmentation project with experiments tracked using MLflow, trained models stored under `models/`, and a simple Streamlit UI to load models and make predictions.
 
-## Columns
+Contents
+- `app.py` - (optional) demo app entrypoint
+- `src/` - training, preprocessing, and utility scripts (`train.py`, `preprocess.py`, `evaluate.py`, `utils.py`)
+- `models/` - serialized models and scalers (e.g., `kmeans.pkl`, `dbscan.pkl`, `scaler.pkl`)
+- `mlruns/` - MLflow experiment tracking artifacts and metrics
+- `mlartifacts/` - archived artifacts from model runs
+- `CC_GENERAL_preprocessed.csv` - preprocessed dataset used for modeling
+- `streamlit_app.py` - minimal Streamlit UI for model selection and prediction
+- `requirements.txt` - Python dependencies
 
-'CUST_ID',
- 'BALANCE',
- 'BALANCE_FREQUENCY',
- 'PURCHASES',
- 'ONEOFF_PURCHASES',
- 'INSTALLMENTS_PURCHASES',
- 'CASH_ADVANCE',
- 'PURCHASES_FREQUENCY',
- 'ONEOFF_PURCHASES_FREQUENCY',
- 'PURCHASES_INSTALLMENTS_FREQUENCY',
- 'CASH_ADVANCE_FREQUENCY',
- 'CASH_ADVANCE_TRX',
- 'PURCHASES_TRX',
- 'CREDIT_LIMIT',
- 'PAYMENTS',
- 'MINIMUM_PAYMENTS',
- 'PRC_FULL_PAYMENT',
- 'TENURE'
+Quickstart
 
-## Project Structure
+1. Create and activate a virtual environment (Windows PowerShell):
 
-```
-CC_GENERAL.csv                  # Raw credit card data
-CC_GENERAL_preprocessed.csv     # Preprocessed data used for clustering
-CODE.ipynb                      # Main notebook: preprocessing, clustering, evaluation, visualization
-PREPROCESSING.ipynb             # Data cleaning and preprocessing steps (optional)
-VISUALS.ipynb                   # Additional visualizations (optional)
-README.md                       # Project documentation
-```
+```powershell
+python -m venv .venv; .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+# Credit Card Customer Segmentation (MLOps)
 
-## Requirements
+Comprehensive credit card customer segmentation project with MLflow experiment tracking and a Streamlit UI for quick model exploration and prediction.
 
-- Python 3.7+
-- pandas
-- numpy
-- scikit-learn
-- matplotlib
-- seaborn
-- jupyter
+This repository includes data preprocessing, clustering experiments (KMeans, Hierarchical, DBSCAN), evaluation, and a simple UI to load saved models and run single-record predictions.
 
-Install dependencies with:
-```sh
-pip install pandas numpy scikit-learn matplotlib seaborn jupyter
+Contents
+
+- `src/` — training, preprocessing, and utility scripts (`train.py`, `preprocess.py`, `evaluate.py`, `utils.py`)
+- `models/` — serialized models and scalers (e.g., `kmeans.pkl`, `dbscan.pkl`, `scaler.pkl`)
+- `mlruns/` — MLflow experiment tracking artifacts and metrics (local default)
+- `mlartifacts/` — archived artifacts from model runs
+- `CC_GENERAL_preprocessed.csv` — preprocessed dataset used for modeling
+- `streamlit_app.py` — Streamlit UI for model selection and prediction
+- `CODE.ipynb`, `PREPROCESSING.ipynb`, `VISUALS.ipynb` — notebooks used for exploration and visualization
+- `requirements.txt` — Python dependencies
+
+Quickstart (Windows PowerShell)
+
+1. Create and activate a virtual environment and install dependencies:
+
+```powershell
+python -m venv .venv; .\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
 ```
 
-## Data
+2. (Optional) Start MLflow UI to inspect runs and artifacts:
 
-- **CC_GENERAL.csv**: Contains anonymized credit card transactions and customer features.
-- **CC_GENERAL_preprocessed.csv**: Cleaned and preprocessed data ready for clustering.
+```powershell
+mlflow ui --port 5000
+```
 
-## Workflow
+Open http://127.0.0.1:5000 in your browser.
 
-1. **Data Loading & Preprocessing**
-   - Load the preprocessed data.
-   - Select relevant features.
-   - Cap outliers using the IQR method.
-   - Scale features using `RobustScaler`.
-   - Reduce dimensionality to 2D using PCA for visualization.
+3. Start the Streamlit UI:
 
-2. **Clustering Algorithms**
-   - **KMeans**: Partition customers into 4 clusters.
-   - **Agglomerative (Hierarchical) Clustering**: Group customers using Ward linkage.
-   - **DBSCAN**: Density-based clustering with automatic outlier detection.
+```powershell
+streamlit run streamlit_app.py
+```
 
-3. **Visualization**
-   - Plot clusters in 2D PCA space for each algorithm using seaborn and matplotlib.
+What each component does
 
-4. **Evaluation**
-   - Compute Silhouette Score, Davies-Bouldin Score, and Calinski-Harabasz Score for each model.
-   - Compare clustering performance.
+- Preprocessing: `src/preprocess.py` contains helpers to load, clean, transform and scale the data. The canonical preprocessed dataset is `CC_GENERAL_preprocessed.csv`.
+- Training & experiments: `src/train.py` runs clustering experiments and logs parameters, metrics and artifacts to MLflow (`mlruns/` by default).
+- Models: trained models and a scaler are saved under `models/` as joblib pickles (e.g. `kmeans.pkl`, `scaler.pkl`).
+- UI: `streamlit_app.py` loads the pickled model and scaler and allows single-record prediction with the same feature order used for training.
 
-## How to Run
+Model & input format
 
-1. Open `CODE.ipynb` in Jupyter Notebook or Visual Studio Code.
-2. Run all cells sequentially.
-3. Review the visualizations and evaluation metrics at the end of the notebook.
+- The preprocessing pipeline and preprocessed CSV contain the following numeric columns (order used by the Streamlit UI):
 
-## Example Results
+```
+CUST_ID (dropped for modeling),
+BALANCE,
+BALANCE_FREQUENCY,
+PURCHASES,
+ONEOFF_PURCHASES,
+INSTALLMENTS_PURCHASES,
+CASH_ADVANCE,
+PURCHASES_FREQUENCY,
+ONEOFF_PURCHASES_FREQUENCY,
+PURCHASES_INSTALLMENTS_FREQUENCY,
+CASH_ADVANCE_FREQUENCY,
+CASH_ADVANCE_TRX,
+PURCHASES_TRX,
+CREDIT_LIMIT,
+PAYMENTS,
+MINIMUM_PAYMENTS,
+PRC_FULL_PAYMENT,
+TENURE
+```
 
-- Visualizations show how customers are grouped in 2D PCA space.
-- Evaluation metrics
+- The Streamlit UI and example code expect a `scaler.pkl` (joblib) if scaling was applied at training time. If present, the app will apply the scaler before prediction.
 
+Using MLflow
 
+- To view runs and artifacts locally, start the MLflow UI (see Quickstart).
+- `src/train.py` logs runs to the default tracking URI (local `mlruns/`). You can change tracking server or backend store via environment variables (see MLflow docs):
 
-## OUTPUT
+```powershell
+set MLFLOW_TRACKING_URI=http://your-tracking-server:5000
+```
 
-## Before capping
-![alt text](image-3.png)
-## After capping
-![alt text](image-4.png)
-## Hierarchical Clustering Visualization (2D PCA)
-![alt text](image-2.png)
-## KMeans Clustering Visualization
-![alt text](image-1.png)
-## DBSCAN Clustering Visualization
-![alt text](image-5.png)
+- To promote models to a registry or to load MLflow model format instead of pickles, adapt `src/train.py` to call `mlflow.sklearn.log_model(..., registered_model_name='CreditCardClustering')`.
+
+Streamlit UI details
+
+- The UI lists `.pkl` files from `models/`. Select a model and enter numeric values in the sidebar form.
+- If `scaler.pkl` exists it will be applied automatically.
+- The app attempts to query MLflow runs related to the model name (best-effort) and will not fail if no tracking server is reachable.
+
+Recommended workflow
+
+1. Run experiments with `src/train.py`. Confirm metrics and artifacts in MLflow UI.
+2. Save the best model and the scaler to `models/` (joblib):
+
+```python
+import joblib
+joblib.dump(best_model, 'models/kmeans.pkl')
+joblib.dump(scaler, 'models/scaler.pkl')
+```
+
+3. Use `streamlit_app.py` for quick manual testing or demos.
+
+Extending this project
+
+- Add batch inference via CSV upload in Streamlit.
+- Add MLflow Model Registry integration and automated promotion pipelines.
+- Containerize the Streamlit app and MLflow tracking server with Docker for reproducible deployment.
+
+Dependencies
+
+The project already includes `mlflow` and `streamlit` in `requirements.txt`. Key packages:
+
+- pandas, numpy, scikit-learn, joblib, mlflow, streamlit
+
+Troubleshooting
+
+- If Streamlit cannot find models, ensure your `models/` directory contains `.pkl` files and is in the repo root.
+- If MLflow UI shows no runs, verify `src/train.py` ran and logged runs (check `mlruns/`).
+
+License
+
+This repository is provided as-is. Modify and extend as needed.
